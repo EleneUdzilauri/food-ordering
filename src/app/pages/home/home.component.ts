@@ -7,6 +7,12 @@ import { StoreService } from 'src/app/services/store.service';
 
 const ROW_HEIGHT: { [id: number]: number} = { 1: 400, 3: 335, 4: 350 }
 
+interface BasketItem {
+  quantity: number,
+  price: number,
+  productId: number,
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,6 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
   sort = 'desc';
   count = '12';
   productsSubscription: Subscription | undefined;
+  cartItemSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService, private storeService: StoreService) {
   }
@@ -61,6 +68,11 @@ export class HomeComponent implements OnInit, OnDestroy  {
       price: product.price,
       quantity: 1,
       id: product.id,
+    })
+
+    this.cartItemSubscription = this.storeService.addToBasket({
+      quantity: 1, price: product.price, productId: product.id
+    }).subscribe((_) => {
     })
   };
 

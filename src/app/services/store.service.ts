@@ -6,6 +6,13 @@ import { Category } from '../models/category.model';
 
 const STORE_BASE_URL = 'https://restaurant.webwide.ge/api'
 
+interface BasketItem {
+  quantity: number,
+  price: number,
+  productId: number,
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -64,6 +71,13 @@ export class StoreService{
 
     return this.httpClient.get<Array<Product>>(
       `${STORE_BASE_URL}/Products/GetFiltered?categoryId=${categoryId}`
+    )
+  }
+
+
+  addToBasket(item: BasketItem): Observable<BasketItem> {
+    return this.httpClient.post<BasketItem>(
+      `${STORE_BASE_URL}/Baskets/AddToBasket`, item
     )
   }
 

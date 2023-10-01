@@ -27,6 +27,7 @@ export class CartService {
     this._snackBar.open('1 item added to cart', 'OK', { duration: 3000 })
     
   }
+  
 
   getTotal(items: Array<CartItem>): number {
     return items
