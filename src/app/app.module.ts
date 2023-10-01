@@ -17,6 +17,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatBadgeModule } from '@angular/material/badge'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatListModule } from '@angular/material/list';
+import { MatSliderModule } from '@angular/material/slider'
 
 import { HeaderComponent  } from './components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -25,6 +26,9 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
 import { ProductBoxComponent } from './pages/home/components/product-box/product-box.component';
 import { CartComponent } from './pages/cart/cart.component'
 import { CartService } from './services/cart.service';
+import { StoreService } from './services/store.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -54,8 +58,11 @@ import { CartService } from './services/cart.service';
     MatBadgeModule,
     MatSnackBarModule,
     MatListModule,
+    HttpClientModule,
+    MatSliderModule,
+    FormsModule,
   ],
-  providers: [CartService],
+  providers: [CartService, StoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

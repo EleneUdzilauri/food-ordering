@@ -1,12 +1,45 @@
 <mat-expansion-panel *ngIf="categories">
+
     <mat-expansion-panel-header>
         <mat-panel-title>
             CATEGORIES
         </mat-panel-title>
     </mat-expansion-panel-header>
+
     <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let category of categories" [value]="category">
-            <button (click)="onShowCategory(category)">{{ category }}</button>
+        <mat-list-option *ngFor="let category of categories" [value]="category" (click)="getFilteredByCategoryId(category.id)">
+            <!-- <button (click)="onShowCategory(category)">{{ category }}</button> -->
+            <button>{{ category.name }}</button>
         </mat-list-option>
     </mat-selection-list>
+
+
+</mat-expansion-panel>
+
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            DETAILED SEARCH
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-selection-list>
+        <div [(ngModel)]="nuts" (click)="onNutsChoose('nuts')">
+            <mat-list-option>
+                <button>No Nuts</button>
+            </mat-list-option>
+        </div>
+        <mat-list-option [(ngModel)]="vegetarian" (click)="onVeganChoose('vegeterian')">
+            <button>Vegetarian</button>
+        </mat-list-option>
+    </mat-selection-list>
+
+    <div class="mt-5">
+        <mat-slider min="0" max="4" step="1" discrete>
+            <input [value]="spiciness" matSliderThumb>
+        </mat-slider>
+    </div>
+
+
 </mat-expansion-panel>
