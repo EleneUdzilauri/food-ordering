@@ -3,6 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
+import { CartItem } from '../models/cart.model';
 
 const STORE_BASE_URL = 'https://restaurant.webwide.ge/api'
 
@@ -78,6 +79,12 @@ export class StoreService{
   addToBasket(item: BasketItem): Observable<BasketItem> {
     return this.httpClient.post<BasketItem>(
       `${STORE_BASE_URL}/Baskets/AddToBasket`, item
+    )
+  }
+
+  getCartItems(): Observable<Array<CartItem>> {
+    return this.httpClient.get<Array<CartItem>>(
+      `${STORE_BASE_URL}/Baskets/GetAll`
     )
   }
 

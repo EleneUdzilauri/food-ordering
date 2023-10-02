@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
+
+
+const STORE_BASE_URL = 'https://restaurant.webwide.ge/api'
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class CartService {
 
   cart = new BehaviorSubject<Cart>({ items: []})
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private httpClient: HttpClient) { }
+
 
   addToCart(item: CartItem): void {
     const items = [...this.cart.value.items]
@@ -41,8 +48,8 @@ export class CartService {
     this._snackBar.open('Cart is Cleared', 'OK', { duration: 3000 })
   }
 
-  removeFromCart(item: CartItem, update = true): Array<CartItem> {
-    const filteredItems = this.cart.value.items.filter((_item) => _item.id !== item.id)
+  removeFromCart(itemId: number, update = true): Array<CartItem> {
+    const filteredItems = this.cart.value.items.filter((_item) => _item.id !== itemId)
 
     if(update) {
       this.cart.next({ items: filteredItems })
@@ -67,14 +74,91 @@ export class CartService {
         }
 
       }
+      console.log(_item);
+      
+
       return _item
 
     })
 
     if(itemForRemoval){
-      filteredItems = this.removeFromCart(itemForRemoval, false)
+      filteredItems = this.removeFromCart(itemForRemoval.id, false)
     }
+
+    
     this.cart.next({ items: filteredItems })
     this._snackBar.open('1 item removed from cart', 'OK', { duration: 3000 })
+
+  }
+
+
+  getCartItems(): Observable<Array<CartItem>> {
+    return this.httpClient.get<Array<CartItem>>(
+      `${STORE_BASE_URL}/Baskets/GetAll`
+    )
+  }
+
+  removeItemFromCart(cartItemId: number): Observable<number> {
+    return this.httpClient.delete<number>(
+      `${STORE_BASE_URL}/Baskets/DeleteProduct/${cartItemId}`
+    )
+  } 
+
+  decreaseCartItemQuantity(
+    { price, productId, quantity}:
+    { price: number, productId: number, quantity: number}
+    ) {
+      const cart = this.cart.getValue()
+
+      this.cart.next({ 
+        items: cart.items.map((i) => {
+          if (i.id === productId) {
+            return {
+              ...i,
+              quantity,
+            }
+          }
+          
+          return i
+        })
+      })
+
+    return this.httpClient.put(
+      `${STORE_BASE_URL}/Baskets/UpdateBasket`,
+      {
+        price,
+        productId,
+        quantity,
+      }
+    )
+  }
+
+  increaseCartItemQuantity(
+    { price, productId, quantity}:
+    { price: number, productId: number, quantity: number}
+    ) {
+      const cart = this.cart.getValue()
+      
+    this.cart.next({ 
+      items: cart.items.map((i) => {
+        if (i.id === productId) {
+          return {
+            ...i,
+            quantity,
+          }
+        }
+        
+        return i
+      })
+    })
+
+    return this.httpClient.put(
+      `${STORE_BASE_URL}/Baskets/UpdateBasket`,
+      {
+        price,
+        productId,
+        quantity,
+      }
+    )
   }
 }
