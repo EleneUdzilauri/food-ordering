@@ -37,7 +37,7 @@
 
     <div class="mt-5">
         <mat-slider min="0" max="4" step="1" discrete>
-            <input [value]="spiciness" matSliderThumb>
+            <input (change)="onInputChange($event)" [value]="spiciness" matSliderThumb>
         </mat-slider>
     </div>
 

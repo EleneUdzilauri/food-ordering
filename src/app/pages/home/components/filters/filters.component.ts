@@ -54,15 +54,19 @@ export class FiltersComponent {
       })
   }
 
-  getFilteredProducts(categoryName: FilterFields, categoryValue: boolean): void {
+  getFilteredProducts(categoryName?: FilterFields, categoryValue?: boolean): void {
 
-    this.categoriesFilter[categoryName] = categoryValue
+    if (categoryName !== undefined && categoryValue !== undefined) {
+      this.categoriesFilter[categoryName] = categoryValue
+    }
 
     const filterObj: any = { ...this.categoriesFilter }
 
     if (this.categoryId > 0) {
       filterObj.categoryId = this.categoryId
     }
+
+    filterObj.spiciness = this.spiciness
 
     this.filteredCategoriesSubscription = 
       this.storeService.getAllFiltered(filterObj)
@@ -96,6 +100,10 @@ export class FiltersComponent {
         })
   }
 
+  onInputChange(event: any): void {
+    this.spiciness = Number(event.target.value)
+    this.getFilteredProducts()
+  }
 
   // ngOnDestroy(): void {
   //   if(this.filteredCategoriesSubscription){

@@ -37,6 +37,17 @@ export class HomeComponent implements OnInit, OnDestroy  {
     this.storeService.getCartItems()
   }
 
+  onResize(event: any) {
+    // this.cols = (event.target.innerWidth <= 700) ? 1 : 3;
+    if(event.target.innerWidth <= 700){
+      this.cols = 1
+    }else if(event.target.innerWidth >= 700 && event.target.innerWidth <= 1000){
+      this.cols = 2
+    }else{
+      this.cols = 3
+    }
+  }
+
   getProducts(): void {
     this.productsSubscription = this.storeService.getAllProducts(this.count, this.sort)
       .subscribe((_products) => {
