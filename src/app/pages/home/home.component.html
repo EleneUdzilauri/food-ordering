@@ -1,9 +1,12 @@
 <mat-drawer-container 
     [autosize]="true"
-    class="min-h-full max-w-7xl mx-auto border-x"
+    class="min-h-full max-w-7xl mx-auto border-x !bg-slate-100"
 >
-    <mat-drawer mode="side" opened class="p-6 w-1/4">
-        <app-filters (products)="onFilteredProducts($event)" (showCategory)="onShowCategory($event)"></app-filters>
+    <mat-drawer mode="side" opened class="p-6 w-1/4 !bg-slate-200 !border-r-4 !border-red-300">
+        <app-filters 
+            (products)="onFilteredProducts($event)" 
+            (showCategory)="onShowCategory($event)"
+        ></app-filters>
     </mat-drawer>
     <mat-drawer-content class="p-6">
         <app-products-header (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>

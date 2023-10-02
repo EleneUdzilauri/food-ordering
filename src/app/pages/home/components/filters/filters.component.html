@@ -1,45 +1,47 @@
-<mat-expansion-panel *ngIf="categories">
+<div class="flex flex-col gap-5">
+    <mat-expansion-panel *ngIf="categories">
 
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            CATEGORIES
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <mat-selection-list [multiple]="false">
-        <mat-list-option *ngFor="let category of categories" [value]="category" (click)="getFilteredByCategoryId(category.id)">
-            <!-- <button (click)="onShowCategory(category)">{{ category }}</button> -->
-            <button>{{ category.name }}</button>
-        </mat-list-option>
-    </mat-selection-list>
-
-
-</mat-expansion-panel>
-
-
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            DETAILED SEARCH
-        </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <mat-selection-list>
-        <div [(ngModel)]="this.categoriesFilter.nuts" (click)="onNutsChoose('nuts')">
-            <mat-list-option>
-                <button>No Nuts</button>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                CATEGORIES
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+        <mat-selection-list [multiple]="false">
+            <mat-list-option *ngFor="let category of categories" [value]="category" (click)="getFilteredByCategoryId(category.id)">
+                <!-- <button (click)="onShowCategory(category)">{{ category }}</button> -->
+                <button>{{ category.name }}</button>
             </mat-list-option>
+        </mat-selection-list>
+    
+    
+    </mat-expansion-panel>
+    
+    
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DETAILED SEARCH
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    
+        <mat-selection-list>
+            <div [(ngModel)]="this.categoriesFilter.nuts" (click)="onNutsChoose('nuts')">
+                <mat-list-option>
+                    <button>No Nuts</button>
+                </mat-list-option>
+            </div>
+            <mat-list-option [(ngModel)]="this.categoriesFilter.vegeterian" (click)="onVeganChoose('vegeterian')">
+                <button>Vegetarian</button>
+            </mat-list-option>
+        </mat-selection-list>
+    
+        <div class="mt-5">
+            <mat-slider min="0" max="4" step="1" discrete>
+                <input (change)="onInputChange($event)" [value]="spiciness" matSliderThumb>
+            </mat-slider>
         </div>
-        <mat-list-option [(ngModel)]="this.categoriesFilter.vegeterian" (click)="onVeganChoose('vegeterian')">
-            <button>Vegetarian</button>
-        </mat-list-option>
-    </mat-selection-list>
-
-    <div class="mt-5">
-        <mat-slider min="0" max="4" step="1" discrete>
-            <input (change)="onInputChange($event)" [value]="spiciness" matSliderThumb>
-        </mat-slider>
-    </div>
-
-
-</mat-expansion-panel>
+    
+    
+    </mat-expansion-panel>
+</div>
