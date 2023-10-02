@@ -45,7 +45,6 @@ export class FiltersComponent {
 
   ngOnInit(): void {
     this.getCategories()
-    
   }
 
   getCategories(): void {
@@ -59,8 +58,14 @@ export class FiltersComponent {
 
     this.categoriesFilter[categoryName] = categoryValue
 
+    const filterObj: any = { ...this.categoriesFilter }
+
+    if (this.categoryId > 0) {
+      filterObj.categoryId = this.categoryId
+    }
+
     this.filteredCategoriesSubscription = 
-      this.storeService.getAllFiltered(this.categoriesFilter)
+      this.storeService.getAllFiltered(filterObj)
         .subscribe((_products) => {
           this.products.emit(_products)
         })
@@ -82,6 +87,7 @@ export class FiltersComponent {
 
 
   getFilteredByCategoryId(categoryId: number): void {
+    this.categoryId = categoryId
     this.filteredCategoriesByIdSubscription = 
       this.storeService.getFilteredByCategory(categoryId)
         .subscribe((_products) => {
