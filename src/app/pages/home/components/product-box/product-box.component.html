@@ -13,8 +13,9 @@
             </div>
             <div class="flex justify-between">
                 <span class="text-red-400">{{ product.price | currency: 'GEL' }}</span>
-                <button (click)="onAddToCart()">
-                    <mat-icon class="text-gray-500">
+                <button (click)="onAddToCart()" class="flex gap-2 justify-center">
+                    Add to Cart
+                    <mat-icon class="text-red-600">
                         shopping_cart
                     </mat-icon>
                 </button>
