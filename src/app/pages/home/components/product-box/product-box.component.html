@@ -1,7 +1,7 @@
 <mat-card *ngIf="product" [ngClass]="{'text-center': !fullWidthMode}">
-    <div [ngClass]="{'flex': fullWidthMode}">
+    <div [ngClass]="{'flex': fullWidthMode}" class="bg-slate-50 p-5 border-1 rounded-sm">
         <img 
-            class="mb-1 mx-auto h-[200px]"
+            class="mb-1 mx-auto h-[200px] bg-gray-400 rounded-sm"
             [ngClass]="{'h-[200px]': !fullWidthMode, 'h-[360px]': fullWidthMode}"
             [src]="product.image" 
         />
