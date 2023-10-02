@@ -1,6 +1,6 @@
 <mat-drawer-container 
     [autosize]="true"
-    class="min-h-full max-w-7xl mx-auto border-x !bg-slate-100"
+    class="min-h-full max-w-7xl mx-auto border-x !bg-neutral-50"
 >
     <mat-drawer mode="side" opened class="p-6 w-1/4 !bg-slate-200 !border-r-4 !border-red-300">
         <app-filters 
@@ -20,7 +20,7 @@
                     <app-product-box 
                         [product]="product"
                         (addToCart)="onAddToCart($event)"
-                        class="w-full" 
+                        class="w-full hover:scale-105 hover:shadow-md hover:shadow-slate-400" 
                         [fullWidthMode]="cols === 1"
                     >
                     </app-product-box>
