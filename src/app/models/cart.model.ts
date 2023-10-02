@@ -1,9 +1,11 @@
+import { Product } from "./product.model";
+
 export interface Cart {
     items: Array<CartItem>;
 }
 
 export interface CartItem {
-    product: string;
+    product: Product;
     name: string;
     price: number;
     quantity: number;

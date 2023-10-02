@@ -53,9 +53,12 @@
             <td mat-cell *matCellDef="let element">
                 {{(element.quantity * element.price) | currency: 'GEL'}}
             </td>
-            <td mat-footer-cell *matFooterCellDef>
+            <td mat-footer-cell *matFooterCellDef class="flex">
                 <span class="font-bold py-5 block">
-                    <!-- {{getTotal(cart.items) | currency: 'GEL'}} -->
+                    GEL 
+                </span>
+                <span class="font-bold py-5 block">
+                    {{getTotal(cart.items)}}
                 </span>
             </td>
         </ng-container>

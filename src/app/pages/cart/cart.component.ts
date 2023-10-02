@@ -18,19 +18,7 @@ interface CartItem {
 
 export class CartComponent {
 
-  cart: Cart = { items: [{
-    product: 'https://via.placeholder.com/150',
-    name: 'test',
-    price: 150,
-    quantity: 1,
-    id: 1,
-  },{
-    product: 'https://via.placeholder.com/150',
-    name: 'test2',
-    price: 150,
-    quantity: 3,
-    id: 1,
-  }]};
+  cart: { items: Array<CartItem> } = { items: []};
 
   dataSource: Array<CartItem> = [];
 
@@ -61,13 +49,19 @@ export class CartComponent {
 
   }
 
-  getTotal(items: Array<CartItem>): number {
-    // return this.cartService.getTotal(items)
-    return 1
+  getTotal(items: Array<any>): Number {
+
+    const totalValues = items.map((item) => item.quantity * item.price)
+    const finalValue = totalValues.reduce((prev, cur) => prev + cur, 0)
+    
+    return finalValue
+    
   }
 
   onClearCart(): void {
-    // this.cartService.clearCart()
+    this.cart.items.forEach((item) => {
+      this.onRemoveFromCart(item.product.id)
+    })
   }
 
   onRemoveFromCart(itemId: number): void {
@@ -76,7 +70,6 @@ export class CartComponent {
     .subscribe(() => {
       this.getCartItems()
     })
-  
 
   }
 

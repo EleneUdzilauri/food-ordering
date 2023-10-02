@@ -34,8 +34,23 @@ export class HeaderComponent {
   }
 
   onClearCart(): void {
-    this.cartService.clearCart()
+    this.cart.items.forEach((item) => {
+      this.onRemoveFromCart(item.product.id)
+    })
   }
 
+  onRemoveFromCart(itemId: number): void {
+    console.log(this.itemsQuantity);
+    
+    this.cartService.removeItemFromCart(itemId)
+      .subscribe(() => {
+        this.cart.items = this.cart.items.filter((i) => {
+          if (i.product.id === itemId) {
+            this.itemsQuantity -= i.quantity
+          }
 
+          return i.product.id !== itemId
+        })
+      })
+  }
 }
