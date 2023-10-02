@@ -4,6 +4,8 @@ import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 
+type FilterFields = 'nuts' | 'vegeterian';
+
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
@@ -20,20 +22,18 @@ export class FiltersComponent {
 
   filteredCategoriesByIdSubscription: Subscription | undefined;
 
-  vegetarian: boolean = false;
-  nuts: boolean = true;
   spiciness: number = 0;
 
   @Output() products = new EventEmitter<Array<Product>>();
 
-  categoriesArray: Array<{}> = [{}];
+  categoriesFilter: Record<FilterFields, boolean> = {
+    nuts: true,
+    vegeterian: false
+  };
 
   @Output() filteredProducts = new EventEmitter()
 
   categoryId: number = 0;
-
-
-
 
   constructor(private storeService: StoreService) {
   }
@@ -55,12 +55,12 @@ export class FiltersComponent {
       })
   }
 
-  getFilteredProducts(categoryName: string, categoryValue: boolean): void {
+  getFilteredProducts(categoryName: FilterFields, categoryValue: boolean): void {
 
-    this.categoriesArray?.push({[categoryName]: categoryValue})
+    this.categoriesFilter[categoryName] = categoryValue
 
     this.filteredCategoriesSubscription = 
-      this.storeService.getAllFiltered(this.categoriesArray)
+      this.storeService.getAllFiltered(this.categoriesFilter)
         .subscribe((_products) => {
           this.products.emit(_products)
         })
@@ -68,16 +68,16 @@ export class FiltersComponent {
     //// 
   }
 
-  onNutsChoose(categoryKey: string): void {    
-    this.nuts = !this.nuts
+  onNutsChoose(categoryKey: FilterFields): void {    
+    this.categoriesFilter.nuts = !this.categoriesFilter.nuts
     
-    this.getFilteredProducts(categoryKey, this.nuts)
+    this.getFilteredProducts(categoryKey, this.categoriesFilter.nuts)
     
   }
 
-  onVeganChoose(categoryKey: string): void {
-    this.vegetarian = !this.vegetarian
-    this.getFilteredProducts(categoryKey, this.vegetarian)
+  onVeganChoose(categoryKey: FilterFields): void {
+    this.categoriesFilter.vegeterian = !this.categoriesFilter.vegeterian
+    this.getFilteredProducts(categoryKey, this.categoriesFilter.vegeterian)
   }
 
 

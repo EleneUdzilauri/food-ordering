@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
+import queryString from 'query-string';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
 import { CartItem } from '../models/cart.model';
@@ -33,38 +34,11 @@ export class StoreService{
     )
   }
 
-  getAllFiltered(categoryValues: {}[]): Observable<Array<Product>> {
-
-    const getFilteredEndpoint = () => {
-     
-      let result: Array<any> = [];
-      let res = '';
-      if(categoryValues.length === 1) {
-        categoryValues.map((categoryValues) => {
-          for (const [key, value] of Object.entries(categoryValues)) {
-            res = `${key}=${value}`;
-          }
-        })
-        
-        return res
-      }else {
-        categoryValues.map((arr, i) => {
-          for (const [key, value] of Object.entries(arr)) {
-            if(i === 0) {
-              result.push(`${key}=${value}`)
-            }else {
-              result.push(`&${key}=${value}`)
-
-            }
-          }
-        })
-        return result.join('')
-      }
-    }
+  getAllFiltered(categoryValues: {}): Observable<Array<Product>> {
 
     
     return this.httpClient.get<Array<Product>>(
-      `${STORE_BASE_URL}/Products/GetFiltered?${getFilteredEndpoint()}`
+      `${STORE_BASE_URL}/Products/GetFiltered?${queryString.stringify(categoryValues)}`
     )
   }
 

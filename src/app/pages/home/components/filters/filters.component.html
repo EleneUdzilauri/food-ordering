@@ -25,12 +25,12 @@
     </mat-expansion-panel-header>
 
     <mat-selection-list>
-        <div [(ngModel)]="nuts" (click)="onNutsChoose('nuts')">
+        <div [(ngModel)]="this.categoriesFilter.nuts" (click)="onNutsChoose('nuts')">
             <mat-list-option>
                 <button>No Nuts</button>
             </mat-list-option>
         </div>
-        <mat-list-option [(ngModel)]="vegetarian" (click)="onVeganChoose('vegeterian')">
+        <mat-list-option [(ngModel)]="this.categoriesFilter.vegeterian" (click)="onVeganChoose('vegeterian')">
             <button>Vegetarian</button>
         </mat-list-option>
     </mat-selection-list>
